@@ -20,19 +20,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(Long id) throws NotFoundException {
+    public User findById(Long id) throws NotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
     }
 
     @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Transactional
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        User user = findByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("Пользователь %s не найден", username));
+        }
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities()
+        );
     }
 
     @Transactional

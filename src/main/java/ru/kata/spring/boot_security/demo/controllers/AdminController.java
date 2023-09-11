@@ -18,7 +18,7 @@ public class AdminController {
 
     @GetMapping(value = "/admin")
     public String getAllUsers(ModelMap model) {
-        model.addAttribute("usersList", userService.getAllUsers());
+        model.addAttribute("usersList", userService.findAllUsers());
         return "users";
     }
 
@@ -36,7 +36,7 @@ public class AdminController {
     @GetMapping(value = "/admin/edit")
     public String editUser(@RequestParam("id") Long id,
                            ModelMap model) throws NotFoundException {
-        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("user", userService.findById(id));
         return "edit-user";
     }
 

@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-    List<User> getAllUsers();
+    List<User> findAllUsers();
 
-    User getUserById(Long id) throws NotFoundException;
+    User findById(Long id) throws NotFoundException;
+
+    User findByUsername(String username);
 
     void addUser(User user);
 
