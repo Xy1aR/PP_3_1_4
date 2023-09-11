@@ -6,7 +6,12 @@
 <body>
 <h1>User, welcome spring boot security page!</h1>
 
-
+<div th:object="${user}">
+    <p th:text="Username + ${user.getUsername()}"></p><br>
+    <p>First Name:</p><br>
+    <p>Last Name:</p><br>
+    <p>Age</p>
+</div>
 
 </body>
 </html>
