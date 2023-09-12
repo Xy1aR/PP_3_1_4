@@ -17,10 +17,14 @@ public class WebSecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;
     private final UserService userService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler, UserService userService) {
+    public WebSecurityConfig(LoginSuccessHandler loginSuccessHandler,
+                             UserService userService,
+                             BCryptPasswordEncoder passwordEncoder) {
         this.loginSuccessHandler = loginSuccessHandler;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -45,18 +49,13 @@ public class WebSecurityConfig {
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userService);
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 }

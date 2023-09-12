@@ -22,6 +22,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Transient
+    private String newPassword;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -73,6 +76,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     public String getFirstName() {

@@ -4,13 +4,30 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<a href="/logout"><button type="button">Выйти</button></a>
+<br />
+<div th:object="${user}">
+    <h1>
+        <span th:text="${user.getUsername()}"></span>, welcome to your info page!
+    </h1>
+</div>
 
 <div th:object="${user}">
-    <p th:text="Username + ${user.getUsername()}"></p><br>
-    <p>First Name:</p><br>
-    <p>Last Name:</p><br>
-    <p>Age</p>
+    <h3>
+        Username: <span th:text="${user.getUsername()}"></span>
+    </h3>
+    <br />
+    <h3>
+        First Name: <span th:text="${user.getFirstName()}"></span>
+    </h3>
+    <br />
+    <h3>
+        Last Name: <span th:text="${user.getLastName()}"></span>
+    </h3>
+    <br />
+    <h3>
+        Age: <span th:text="${user.getAge()}"></span>
+    </h3>
 </div>
 
 </body>

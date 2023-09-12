@@ -5,18 +5,32 @@
     <title>New User</title>
 </head>
 <body>
-
+<a href="/logout"><button type="button">Выйти</button></a>
+<br />
 <form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
+    <label for="username">Enter Username: </label>
+    <input required type="text" th:field="*{username}" id="username"/>
+    <br />
+    <label for="password">Enter Password: </label>
+    <input required type="text" th:field="*{password}" id="password"/>
+    <br />
     <label for="first_name">Enter First Name: </label>
-    <input type="text" th:field="*{firstName}" id="first_name"/>
-    <br/>
+    <input required type="text" th:field="*{firstName}" id="first_name"/>
+    <br />
     <label for="last_name">Enter Last Name:</label>
-    <input type="text" th:field="*{lastName}" id="last_name"/>
-    <br/>
+    <input required type="text" th:field="*{lastName}" id="last_name"/>
+    <br />
     <label for="age">Enter age:</label>
-    <input type="text" th:field="*{age}" id="age"/>
-    <br/>
-    <br/>
+    <input required type="text" th:field="*{age}" id="age"/>
+    <br />
+    <label>Roles:
+        <select size="2" multiple name="roles" >
+            <option selected="selected" value="1">USER</option>
+            <option value="2">ADMIN</option>
+        </select>
+    </label>
+    <br />
+    <br />
     <input type="submit" value="CREATE USER"/>
 </form>
 
