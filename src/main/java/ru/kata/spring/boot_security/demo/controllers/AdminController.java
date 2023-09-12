@@ -43,7 +43,6 @@ public class AdminController {
 
     @PatchMapping(value = "/edit")
     public String updateUser(@ModelAttribute("user") User user) {
-        System.out.println(user.getNewPassword());
         userService.editUser(user);
         return "redirect:/admin";
     }
