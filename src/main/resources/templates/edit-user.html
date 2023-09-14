@@ -27,10 +27,9 @@
     <input type="text" th:field="*{age}" id="age"/>
     <p th:if="${#fields.hasErrors('age')}">Invalid Age</p>
     <br />
-    <label>Roles:
-        <select size="2" multiple name="roles" >
-            <option selected="selected" value="1">USER</option>
-            <option value="2">ADMIN</option>
+    <label for="roles">Roles:
+        <select id="roles" name="roles">
+            <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
         </select>
     </label>
     <br />

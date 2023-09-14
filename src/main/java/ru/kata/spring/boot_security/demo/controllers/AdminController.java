@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.exceptions.NotFoundException;
+import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -24,7 +27,10 @@ public class AdminController {
     }
 
     @GetMapping(value = "/new")
-    public String addUser(@ModelAttribute("user") User user) {
+    public String addUser(@ModelAttribute("user") User user,
+                          ModelMap model) {
+        model.addAttribute("roles", roleService.findAllRoles());
+        model.addAttribute("roles", roleService.findAllRoles());
         return "new-user";
     }
 
@@ -38,6 +44,7 @@ public class AdminController {
     public String editUser(@RequestParam("id") Long id,
                            ModelMap model) throws NotFoundException {
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("roles", roleService.findAllRoles());
         return "edit-user";
     }
 
