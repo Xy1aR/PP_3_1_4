@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
@@ -21,17 +23,11 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String getAllUsers(ModelMap model) {
+    public String getAllUsers(ModelMap model, Principal principal) {
         model.addAttribute("usersList", userService.findAllUsers());
-        return "users";
-    }
-
-    @GetMapping(value = "/new")
-    public String addUser(@ModelAttribute("user") User user,
-                          ModelMap model) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
         model.addAttribute("roles", roleService.findAllRoles());
-        model.addAttribute("roles", roleService.findAllRoles());
-        return "new-user";
+        return "admin";
     }
 
     @PostMapping(value = "/new")
@@ -40,16 +36,8 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/edit")
-    public String editUser(@RequestParam("id") Long id,
-                           ModelMap model) throws NotFoundException {
-        model.addAttribute("user", userService.findById(id));
-        model.addAttribute("roles", roleService.findAllRoles());
-        return "edit-user";
-    }
-
-    @PatchMapping(value = "/edit")
-    public String updateUser(@ModelAttribute("user") User user) {
+    @PatchMapping(value = "/edit/{id}")
+    public String updateUser(@ModelAttribute("user") User user) throws NotFoundException {
         userService.editUser(user);
         return "redirect:/admin";
     }

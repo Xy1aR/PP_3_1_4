@@ -18,6 +18,6 @@ public interface UserService extends UserDetailsService {
 
     void removeUser(Long id);
 
-    void editUser(User user);
+    void editUser(User user) throws NotFoundException;
 
 }

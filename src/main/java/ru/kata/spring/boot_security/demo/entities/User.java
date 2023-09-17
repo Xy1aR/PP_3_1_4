@@ -22,9 +22,6 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Transient
-    private String newPassword;
-
     @Column(name = "first_name")
     private String firstName;
 
@@ -78,14 +75,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -116,6 +105,10 @@ public class User implements UserDetails {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public String concatRoles() {
+        return roles.stream().map(role -> role.getName().substring(5)).collect(Collectors.joining(" "));
     }
 
     @Override

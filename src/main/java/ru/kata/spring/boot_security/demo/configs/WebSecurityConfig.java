@@ -29,16 +29,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(loginSuccessHandler)
+                .formLogin()
+                .loginPage("/login")
+                .successHandler(loginSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll();
         return http.build();
