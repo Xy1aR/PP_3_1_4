@@ -91,7 +91,7 @@
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                                                     </div>
                                                                     <div class="modal-body text-center">
-                                                                        <form th:method="PATCH" th:action="@{/admin/edit/{id}(id=${user.id})}" th:object="${user}">
+                                                                        <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.id})}" th:object="${user}">
                                                                             <div class="d-flex flex-column w-50 mx-auto">
                                                                                 <div class="form-group mb-3">
                                                                                     <label class="form-label fw-bold" for="id">ID</label>
@@ -205,7 +205,7 @@
                                 <h5 class="card-header py-3">Add new user</h5>
                                 <div class="card-body text-center">
                                     <div class="w-50 mx-auto">
-                                    <form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
+                                    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
                                         <div class="form-group mb-3">
                                             <label class="form-label fw-bold" for="new_first_name">First Name</label>
                                             <input class="form-control" type="text" id="new_first_name" name="firstName"/>

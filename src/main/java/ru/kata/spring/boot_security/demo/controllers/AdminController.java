@@ -30,13 +30,13 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping(value = "/new")
+    @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/admin";
     }
 
-    @PatchMapping(value = "/edit/{id}")
+    @PatchMapping(value = "/{id}")
     public String updateUser(@ModelAttribute("user") User user) throws NotFoundException {
         userService.editUser(user);
         return "redirect:/admin";
