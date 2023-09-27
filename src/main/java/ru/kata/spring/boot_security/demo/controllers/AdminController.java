@@ -1,17 +1,21 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.exceptions.NotFoundException;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Map;
 
-@Controller
-@RequestMapping(value = "/admin")
+@RestController
+@RequestMapping(value = "/api/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -23,14 +27,14 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String getAllUsers(ModelMap model, Principal principal) {
-        model.addAttribute("usersList", userService.findAllUsers());
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
-        model.addAttribute("roles", roleService.findAllRoles());
-        return "admin";
+    public ResponseEntity<List<User>> getAllUsers(Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        List<User> users = userService.findAllUsers();
+        users.add(user);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/new")
+   /* @PostMapping(value = "/new")
     public String createUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/admin";
@@ -46,6 +50,6 @@ public class AdminController {
     public String removeUser(@RequestParam("id") Long id) {
         userService.removeUser(id);
         return "redirect:/admin";
-    }
+    }*/
 
 }

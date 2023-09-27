@@ -1,14 +1,15 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.security.Principal;
 
-@Controller
-@RequestMapping(value = "/user")
+@RestController
+@RequestMapping(value = "/api/auth")
 public class UserController {
 
     private final UserService userService;
@@ -18,9 +19,9 @@ public class UserController {
     }
 
     @GetMapping()
-    public String showUser(ModelMap model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
-        return "user";
+    public ResponseEntity<User> showUser(Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }
