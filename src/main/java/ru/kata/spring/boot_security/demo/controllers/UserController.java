@@ -9,7 +9,7 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(value = "/api/auth")
+@RequestMapping(value = "/api/user")
 public class UserController {
 
     private final UserService userService;

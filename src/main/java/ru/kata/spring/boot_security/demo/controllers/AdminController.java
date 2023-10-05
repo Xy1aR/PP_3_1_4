@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.exceptions.NotFoundException;
 import ru.kata.spring.boot_security.demo.services.RoleService;
@@ -27,29 +28,38 @@ public class AdminController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        List<User> users = userService.findAllUsers();
-        users.add(user);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
-   /* @PostMapping(value = "/new")
-    public String createUser(@ModelAttribute("user") User user) {
+    @GetMapping(value = "/roles")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        return new ResponseEntity<>(roleService.findAllRoles(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) throws NotFoundException {
+        User user = userService.findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+   @PostMapping(value = "/post/user")
+    public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
         userService.addUser(user);
-        return "redirect:/admin";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user) throws NotFoundException {
+    @PatchMapping(value = "/users/{id}")
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user,
+                             @PathVariable("id") Long id) throws NotFoundException {
         userService.editUser(user);
-        return "redirect:/admin";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping()
-    public String removeUser(@RequestParam("id") Long id) {
+    @DeleteMapping(value = "/users/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
         userService.removeUser(id);
-        return "redirect:/admin";
-    }*/
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
 }
